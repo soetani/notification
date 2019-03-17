@@ -1,0 +1,16 @@
+contact:
+  -
+    nickname: John
+    phone: "+11234567890"
+  -
+    nickname: Taro
+    phone: "+819012345678"
+  -
+    nickname: Nguyen
+    phone: "+84123456789"
+anonymous_name: Anonymous
+outgoing:
+  messages:
+    slack_trigger_word: sms
+    sms_footer_message: "Please reply to:"
+    slack_reply_message: Just sent SMS

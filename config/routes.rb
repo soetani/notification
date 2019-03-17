@@ -1,3 +1,12 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  namespace :api do
+    namespace :v1 do
+      namespace :incoming do
+        resources :messages, only: :create
+      end
+      namespace :outgoing do
+        resources :messages, only: :create
+      end
+    end
+  end
 end

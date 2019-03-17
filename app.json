@@ -17,6 +17,9 @@
     },
     "TWILIO_NUMBER": {
       "required": true
+    },
+    "SLACK_WEBHOOK_URL": {
+      "required": true
     }
   },
   "buildpacks": [
