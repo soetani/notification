@@ -27,6 +27,7 @@ end
 group :test do
   gem "rubocop", "~> 0.65.0", require: false
   gem "rubocop-rails_config"
+  gem "rubocop-checkstyle_formatter", require: false
 end
 
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]

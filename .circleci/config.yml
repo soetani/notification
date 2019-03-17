@@ -1,0 +1,66 @@
+# Ruby CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-ruby/ for more details
+
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.5.0-node-browsers
+        environment:
+          RAILS_ENV: test
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "Gemfile.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      # CI tests
+      - run:
+          name: Create report dir
+          command: mkdir /tmp/test-results
+
+      - run:
+          name: exit 0
+          command: exit 0
+
+      - run:
+          name: Run Rubocop
+          command: |
+            bundle exec rubocop --require rubocop/formatter/checkstyle_formatter \
+                                --format html \
+                                --no-color --rails \
+                                --out /tmp/test-results/rubocop.html app/
+
+# TODO: Enable RSpec
+#      - run:
+#          name: Run RSpec
+#          command: |
+#            mkdir ./tmp/coverage
+#            bundle exec rspec --format html --out /tmp/test-results/rspec.html spec/
+#            mv ./tmp/coverage /tmp/test-results/coverage
+#          no_output_timeout: 20m
+
+      # collect reports
+      - store_test_results:
+          path: /tmp/test-results
+
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results
