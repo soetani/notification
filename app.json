@@ -8,6 +8,15 @@
     "RAILS_ENV": {
       "required": true,
       "value": "review"
+    },
+    "TWILIO_ACCOUNT_SID": {
+      "required": true
+    },
+    "TWILIO_AUTH_TOKEN": {
+      "required": true
+    },
+    "TWILIO_NUMBER": {
+      "required": true
     }
   },
   "buildpacks": [
